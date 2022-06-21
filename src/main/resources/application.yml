@@ -1,0 +1,20 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: bye-crud-generate
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.56.101:3306/mall-pro?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+
+generate:
+  base-package: xyz.chaobei.api
+  packages:
+    model: entity
+    controller: api
+    service: service.impl
+    mapper: mapper
+  resources:
+    mapping: mapper
