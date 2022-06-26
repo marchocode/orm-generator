@@ -1,0 +1,15 @@
+package ${packageName};
+
+/**
+ * ${config.desc}dao层
+ *
+ * @author ${config.author}
+ * @since ${Date}
+ */
+public interface ${fileName} {
+
+    int insert(${});
+
+    ${entity} queryById();
+
+}

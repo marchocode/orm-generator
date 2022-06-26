@@ -1,0 +1,27 @@
+package ${entityPackage};
+
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.lang.Integer;
+
+/**
+ * ${table.name}
+ *
+ * @author
+ * @since ${Date}
+ */
+@Data
+public class ${entity} implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+#foreach ($column in $columns)
+    /**
+     * $column.columnComment
+     */
+    private $column.javaType $column.javaColumn;
+#end
+
+}
