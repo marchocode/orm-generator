@@ -9,6 +9,8 @@ import xyz.chaobei.generate.config.GenerateConfig;
 
 import javax.annotation.Resource;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -28,6 +30,12 @@ public abstract class AbstractTemplate implements TemplateHandler {
 
     private Map<String, Object> context = new HashMap<>();
 
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+
+    protected final String JAVA_TYPE = ".java";
+    protected final String XML_TYPE = ".xml";
+    protected final String HTML_TYPE = ".html";
+
     @Override
     public Template template() {
         return Velocity.getTemplate(templatePath(), "UTF-8");
@@ -36,8 +44,23 @@ public abstract class AbstractTemplate implements TemplateHandler {
     @Override
     public void build() {
 
-        context.put("table" , contextConfig.getTable());
-        context.put("columns" , contextConfig.getColumns());
+        String fileName = fileName(contextConfig.getTable().getName());
+        String filePackage = generateConfig.getGroupId() + "." + packageName();
+        String templateName = templateName();
+
+        context.putAll(contextConfig.getImportRecord());
+        context.put("table", contextConfig.getTable());
+        context.put("columns", contextConfig.getColumns());
+
+        context.put("currentClass", fileName);
+        context.put("currentPackage", filePackage);
+
+        context.put("date", simpleDateFormat.format(new Date()));
+
+        context.putAll(addAddition());
+
+        contextConfig.getImportRecord().put(templateName, fileName);
+        contextConfig.getImportRecord().put(templateName + "Import", filePackage + "." + fileName);
 
         try {
             Template template = this.template();
@@ -67,9 +90,9 @@ public abstract class AbstractTemplate implements TemplateHandler {
 
         String split = Matcher.quoteReplacement(File.separator);
 
-        String fileName = fileName(contextConfig.getTable().getName());
+        String fileName = fileName(contextConfig.getTable().getName()).concat(fileType());
         String packages = packageName();
-        String fullPath = packages.replaceAll("\\." , split);
+        String fullPath = packages.replaceAll("\\.", split);
         String root = generateConfig.getGenerateDir();
 
         String dirPath = root.endsWith(split) ? root.concat(fullPath) : root.concat(split).concat(fullPath);

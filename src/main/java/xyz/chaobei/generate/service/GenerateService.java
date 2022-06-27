@@ -1,5 +1,6 @@
 package xyz.chaobei.generate.service;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.velocity.app.Velocity;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,9 @@ import xyz.chaobei.generate.entity.TableEntityExtend;
 import xyz.chaobei.generate.interfaces.TemplateHandler;
 import xyz.chaobei.generate.mapper.GenerateMapper;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
  **/
 @Service("generateService")
 @Slf4j
+@Getter
 public class GenerateService {
 
     @Resource
@@ -37,7 +41,12 @@ public class GenerateService {
     private ContextConfig contextConfig;
 
     @Resource
-    private Map<String, TemplateHandler> templateMap;
+    private List<TemplateHandler> templateHandlers;
+
+    @PostConstruct
+    public void init() {
+        templateHandlers.sort(Comparator.comparingInt(TemplateHandler::order));
+    }
 
     public void generate(String tableEntity) {
         this.generate(generateMapper.selectTable(tableEntity));
@@ -61,18 +70,18 @@ public class GenerateService {
         contextConfig.setTable(table);
 
         final Map<String, String> typeMap = generateConfig.getTypeMap();
-        log.info("generate,typeMap={}" , typeMap);
+        log.info("generate,typeMap={}", typeMap);
 
         List<ColumnEntity> columnEntityList = generateMapper.selectColumns(tableEntity.getName());
-        log.info("generate,columnEntityList={}" , columnEntityList);
+        log.info("generate,columnEntityList={}", columnEntityList);
 
         List<ColumnEntityExtend> collectExtend = columnEntityList.stream().map(ColumnEntityExtend::new).collect(Collectors.toList());
         collectExtend.stream().forEach(columnEntityExtend -> columnEntityExtend.cover(typeMap));
 
-        log.info("generate,collectExtend={}" , collectExtend);
+        log.info("generate,collectExtend={}", collectExtend);
         contextConfig.setColumns(collectExtend);
 
-        templateMap.forEach((String name, TemplateHandler t) -> t.build());
+        templateHandlers.forEach(item -> item.build());
     }
 
 

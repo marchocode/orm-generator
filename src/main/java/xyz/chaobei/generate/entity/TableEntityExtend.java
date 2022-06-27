@@ -17,7 +17,4 @@ public class TableEntityExtend extends TableEntity {
         super(tableEntity);
     }
 
-    public String className() {
-        return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, getName());
-    }
 }

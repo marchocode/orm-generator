@@ -1,6 +1,8 @@
-package ${entityPackage};
+package ${currentPackage};
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,11 +11,13 @@ import java.lang.Integer;
 /**
  * ${table.name}
  *
- * @author
- * @since ${Date}
+ * @author <a href='https://github.com/marcho-code/orm-generator.git'>orm-generator</>
+ * @since ${date}
  */
-@Data
-public class ${entity} implements Serializable {
+@Getter
+@Setter
+@ToString
+public class ${currentClass} implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

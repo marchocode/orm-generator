@@ -1,15 +1,20 @@
-package ${packageName};
+package ${currentPackage};
+
+import ${JavaEntityImport};
 
 /**
- * ${config.desc}dao层
+ * ${table.name}
  *
- * @author ${config.author}
- * @since ${Date}
+ * @author <a href='https://github.com/marcho-code/orm-generator.git'>orm-generator</>
+ * @since ${date}
  */
-public interface ${fileName} {
+public interface ${currentClass} {
 
-    int insert(${});
+    int insert(${JavaEntity} entity);
 
-    ${entity} queryById();
+    int updateByPrimaryKey(${JavaEntity} entity);
 
+    ${JavaEntity} selectByPrimaryKey(Integer primaryKey);
+
+    int deleteByPrimaryKey(Integer primaryKey);
 }
