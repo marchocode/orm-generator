@@ -12,8 +12,8 @@
     <groupId>xyz.chaobei</groupId>
     <artifactId>spring-api-generate</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-api-generate</name>
-    <description>spring-api-generate</description>
+    <name>orm-generator</name>
+    <description>orm-generator</description>
 
     <properties>
         <java.version>1.8</java.version>
