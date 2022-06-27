@@ -2,6 +2,7 @@ package xyz.chaobei.generate.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import xyz.chaobei.generate.interfaces.TemplateHandler;
 
 import javax.annotation.Resource;
 
@@ -22,4 +23,12 @@ class GenerateServiceTest {
     void generate() {
         generateService.generate("org_user");
     }
+
+    @Test
+    void getTemplateList() {
+        for (TemplateHandler templateHandler : generateService.getTemplateHandlers()) {
+            System.out.println(templateHandler.templateName());
+        }
+    }
+
 }
