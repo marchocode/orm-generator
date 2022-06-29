@@ -10,11 +10,11 @@ import ${JavaEntityImport};
  */
 public interface ${currentClass} {
 
+    ${JavaEntity} selectByPrimaryKey(Integer ${primaryKey.javaColumn});
+
     int insert(${JavaEntity} entity);
 
     int updateByPrimaryKey(${JavaEntity} entity);
 
-    ${JavaEntity} selectByPrimaryKey(Integer primaryKey);
-
-    int deleteByPrimaryKey(Integer primaryKey);
+    int deleteByPrimaryKey(Integer ${primaryKey.javaColumn});
 }
