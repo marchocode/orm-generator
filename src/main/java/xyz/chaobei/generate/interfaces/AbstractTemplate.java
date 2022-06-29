@@ -51,6 +51,7 @@ public abstract class AbstractTemplate implements TemplateHandler {
         context.putAll(contextConfig.getImportRecord());
         context.put("table", contextConfig.getTable());
         context.put("columns", contextConfig.getColumns());
+        context.put("primaryKey", contextConfig.getPrimaryKey());
 
         context.put("currentClass", fileName);
         context.put("currentPackage", filePackage);

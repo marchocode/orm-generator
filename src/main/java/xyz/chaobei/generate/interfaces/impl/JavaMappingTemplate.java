@@ -3,42 +3,36 @@ package xyz.chaobei.generate.interfaces.impl;
 import org.springframework.stereotype.Component;
 import xyz.chaobei.generate.interfaces.AbstractTemplate;
 
-/**
- * @description:
- * @author: <a href='mailto:maruichao52@gmail.com'>MRC</a>
- * @since 2022/6/24
- **/
 @Component
-public class JavaMapperTemplate extends AbstractTemplate {
+public class JavaMappingTemplate extends AbstractTemplate {
 
     @Override
     public String templatePath() {
-        return "generate/mapper.java.vm";
-    }
-
-    @Override
-    public int order() {
-        return 2;
+        return "generate/mapping.xml.vm";
     }
 
     @Override
     public String templateName() {
-        return "JavaMapper";
+        return "JavaMapping";
     }
 
     @Override
     public String packageName() {
-        return "mapper";
+        return "mapping";
     }
 
     @Override
     public String fileName(String tableName) {
-        return String.format("%sMapper", upperCamel(tableName));
+        return upperCamel(tableName);
     }
 
     @Override
     public String fileType() {
-        return JAVA_TYPE;
+        return XML_TYPE;
     }
 
+    @Override
+    public int order() {
+        return 3;
+    }
 }

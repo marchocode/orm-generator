@@ -35,4 +35,8 @@ public class ColumnEntityExtend extends ColumnEntity {
         this.javaColumn = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, getColumn());
     }
 
+    public boolean isPrimary() {
+        return "PRI".equals(getColumnKey());
+    }
+
 }

@@ -63,22 +63,27 @@ public class GenerateService {
     public void generate(TableEntity tableEntity) {
 
         Properties prop = new Properties();
-        prop.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+        prop.put("file.resource.loader.class" , "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         Velocity.init(prop);
 
         TableEntityExtend table = new TableEntityExtend(tableEntity);
         contextConfig.setTable(table);
 
         final Map<String, String> typeMap = generateConfig.getTypeMap();
-        log.info("generate,typeMap={}", typeMap);
+        log.info("generate,typeMap={}" , typeMap);
 
         List<ColumnEntity> columnEntityList = generateMapper.selectColumns(tableEntity.getName());
-        log.info("generate,columnEntityList={}", columnEntityList);
+        log.info("generate,columnEntityList={}" , columnEntityList);
 
         List<ColumnEntityExtend> collectExtend = columnEntityList.stream().map(ColumnEntityExtend::new).collect(Collectors.toList());
         collectExtend.stream().forEach(columnEntityExtend -> columnEntityExtend.cover(typeMap));
 
-        log.info("generate,collectExtend={}", collectExtend);
+        ColumnEntityExtend primaryKey = collectExtend.stream().filter(ColumnEntityExtend::isPrimary).findFirst().orElse(null);
+        log.info("generate,primaryKey={}" , primaryKey);
+
+        contextConfig.setPrimaryKey(primaryKey);
+
+        log.info("generate,collectExtend={}" , collectExtend);
         contextConfig.setColumns(collectExtend);
 
         templateHandlers.forEach(item -> item.build());

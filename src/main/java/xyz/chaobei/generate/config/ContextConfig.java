@@ -34,6 +34,11 @@ public class ContextConfig {
     private List<ColumnEntityExtend> columns;
 
     /**
+     * 当前表的主键信息
+     */
+    private ColumnEntityExtend primaryKey;
+
+    /**
      * 生成文件的包导入记录
      */
     private Map<String, String> importRecord = new HashMap<>();
