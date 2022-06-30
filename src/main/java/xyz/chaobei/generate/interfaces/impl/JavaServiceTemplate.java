@@ -4,41 +4,40 @@ import org.springframework.stereotype.Component;
 import xyz.chaobei.generate.interfaces.AbstractTemplate;
 
 /**
- * @description: JAVA实体类的模板配置
+ * @description:
  * @author: <a href='mailto:maruichao52@gmail.com'>MRC</a>
- * @since 2022/6/24
+ * @since 2022/6/30
  **/
 @Component
-public class JavaControllerTemplate extends AbstractTemplate {
+public class JavaServiceTemplate extends AbstractTemplate {
 
     @Override
     public String templatePath() {
-        return "generate/controller.java.vm";
+        return "generate/service.java.vm";
     }
 
     @Override
     public String templateName() {
-        return "JavaController";
+        return "JavaService";
     }
 
     @Override
     public int order() {
-        return 7;
+        return 5;
     }
 
     @Override
     public String packageName() {
-        return "controller";
+        return "service";
     }
 
     @Override
     public String fileName(String tableName) {
-        return String.format("Api%sController",super.upperCamel(tableName));
+        return String.format("%sService" , upperCamel(tableName));
     }
 
     @Override
     public String fileType() {
         return JAVA_TYPE;
     }
-
 }

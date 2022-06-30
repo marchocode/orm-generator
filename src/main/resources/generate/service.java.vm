@@ -1,0 +1,22 @@
+package ${currentPackage};
+
+import ${JavaEntityImport};
+import ${JavaVOImport};
+
+/**
+ * ${table.name}
+ *
+ * @author <a href='https://github.com/marcho-code/orm-generator.git'>orm-generator</>
+ * @since ${date}
+ */
+public interface ${currentClass} {
+
+    ${JavaEntity} selectByPrimaryKey(${primaryKey.javaType} ${primaryKey.javaColumn});
+
+    boolean insert(${JavaVO} vo);
+
+    boolean updateByPrimaryKey(${JavaVO} vo ,${primaryKey.javaType} ${primaryKey.javaColumn});
+
+    boolean deleteByPrimaryKey(${primaryKey.javaType} ${primaryKey.javaColumn});
+
+}

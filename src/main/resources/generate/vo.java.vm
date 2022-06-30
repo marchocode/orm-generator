@@ -1,0 +1,29 @@
+package ${currentPackage};
+
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
+
+/**
+ * ${table.name}
+ *
+ * @author <a href='https://github.com/marcho-code/orm-generator.git'>orm-generator</>
+ * @since ${date}
+ */
+@Getter
+@Setter
+public class ${currentClass} implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+#foreach ($column in $columns)
+#if($column.columnKey != "PRI")
+    /**
+     * $column.columnComment
+     */
+    private $column.javaType $column.column;
+#end
+#end
+
+}

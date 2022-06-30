@@ -1,0 +1,77 @@
+package ${currentPackage};
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ${JavaServiceImport};
+import ${JavaMapperImport};
+import ${JavaVOImport};
+import ${JavaEntityImport};
+
+import javax.annotation.Resource;
+import java.util.Objects;
+
+/**
+ * ${table.name}
+ *
+ * @author <a href='https://github.com/marcho-code/orm-generator.git'>orm-generator</>
+ * @since ${date}
+ */
+@Service
+public class ${currentClass} implements ${JavaService} {
+
+    @Resource
+    private ${JavaMapper} mapper;
+
+    @Override
+    public ${JavaEntity} selectByPrimaryKey(${primaryKey.javaType} ${primaryKey.javaColumn}){
+
+        ${JavaEntity} entity = mapper.selectByPrimaryKey(${primaryKey.javaColumn});
+
+        Objects.requireNonNull(entity,"Not found");
+
+        return entity;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean insert(${JavaVO} vo){
+
+        ${JavaEntity} model = new ${JavaEntity}();
+        BeanUtils.copyProperties(vo,model);
+
+        // set default values
+        int num = mapper.insert(model);
+
+        return retBool(num);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateByPrimaryKey(${JavaVO} vo ,${primaryKey.javaType} ${primaryKey.javaColumn}) {
+
+        ${JavaEntity} model = this.selectByPrimaryKey(${primaryKey.javaColumn});
+        BeanUtils.copyProperties(vo,model);
+
+        // set default values
+        int num = mapper.updateByPrimaryKey(model);
+
+        return retBool(num);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteByPrimaryKey(${primaryKey.javaType} ${primaryKey.javaColumn}) {
+
+        // add some code
+        int num = mapper.deleteByPrimaryKey(id);
+
+        return retBool(num);
+    }
+
+    private boolean retBool(int num) {
+        return Integer.valueOf(1).equals(num);
+    }
+
+}

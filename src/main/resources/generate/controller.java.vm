@@ -1,126 +1,59 @@
-package ${controllerPackage};
+package ${currentPackage};
 
-import lombok.extern.slf4j.Slf4j;
-import ${entityImport};
-import ${saveAOImport};
-import ${pageAOImport};
-import ${serviceImport};
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import ${JavaServiceImport};
+import ${JavaEntityImport};
+import ${JavaVOImport};
+import org.springframework.http.ResponseEntity;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.List;
+import javax.annotation.Resource;
+
 /**
- * ${config.desc}请求控制层
+ * ${table.name}
  *
- * @author ${config.author}
- * @since ${Date}
+ * @author <a href='https://github.com/marcho-code/orm-generator.git'>orm-generator</>
+ * @since ${date}
  */
 @RestController
 @RequestMapping("/${data.requestName}")
-@Validated
-@Slf4j
-public class ${controller} {
+public class ${currentClass} {
 
-    @Autowired
-    private ${service} ${data.requestName}Service;
+    @Resource
+    private ${JavaService} service;
 
+    @GetMapping("/{${primaryKey.javaColumn}}")
+    public ResponseEntity<${JavaEntity}> getOne(@PathVariable("${primaryKey.javaColumn}") ${primaryKey.javaType} ${primaryKey.javaColumn}) {
 
-    /**
-     * <p>查询单个${config.desc}
-     * <p>author: ${config.author}
-     *
-     * @return CommonResult
-     * @since ${Date}
-     **/
-    @GetMapping("/{${data.primaryName}}")
-    public CommonResult getOne(@PathVariable("${data.primaryName}") @ApiParam("查询的id") ${data.primaryType} id) {
+        ${JavaEntity} result = service.selectByPrimaryKey(${primaryKey.javaColumn});
 
-        log.info("${controller} getOne[查询单个${config.desc}] 查询的id={}", id);
-        ${entity} result = ${data.requestName}Service.findOne(id,true);
-        log.info("${controller} getOne[查询单个${config.desc}] 查询结果={}", JSON.toJSONString(result));
-
-        return CommonResult.success(result);
+        return ResponseEntity.ok(result);
     }
 
-    /**
-     * <p>分页请求${config.desc}
-     * <p>author: ${config.author}
-     *
-     * @param pageAO 分页查询参数
-     * @since ${Date}
-     * @return CommonResult
-     **/
-    @ApiOperation("分页请求${config.desc}")
-    @PostMapping("/page")
-    public CommonResult paging(@RequestBody @ApiParam("分页查询参数") ${pageAO} pageAO) {
-
-        log.info("${controller} paging[分页请求${config.desc}] 分页查询参数={}", JSON.toJSONString(pageAO));
-        Page<${entity}> allList = ${data.requestName}Service.findPage(pageAO);
-        log.info("${controller} paging[分页请求${config.desc}] 查询结果={}", JSON.toJSONString(allList));
-
-        return CommonResult.success(allList);
-    }
-
-    /**
-     * <p>保存一个${config.desc}
-     * <p>author: ${config.author}
-     *
-     * @param params 保存字段
-     * @since ${Date}
-     * @return CommonResult
-     **/
     @PostMapping("/")
-    public CommonResult save(@RequestBody @Valid @ApiParam("保存字段") ${saveAO} params) {
+    public ResponseEntity<Boolean> save(@RequestBody ${JavaVO} vo) {
 
-        log.info("${controller} save[保存一个${config.desc}] 保存字段={}", JSON.toJSONString(params));
-        boolean isSave = ${data.requestName}Service.save(params);
-        log.info("${controller} save[保存一个${config.desc}] 操作结果={}", isSave);
+        boolean isSave = service.insert(vo);
 
-        return CommonResult.result(isSave);
+        return ResponseEntity.ok(isSave);
     }
 
 
-    /**
-     * <p>修改一个${config.desc}
-     * <p>author: ${config.author}
-     *
-     * @param id 被修改的ID
-     * @param params 被修改的字段
-     * @since ${Date}
-     * @return CommonResult
-     **/
-    @PutMapping("/{${data.primaryName}}")
-    public CommonResult update(@PathVariable("${data.primaryName}") @ApiParam("被修改的ID") ${data.primaryType} id, @Valid @RequestBody @ApiParam("被修改的字段") ${saveAO} params) {
+    @PutMapping("/{${primaryKey.javaColumn}}")
+    public ResponseEntity<Boolean> update(@PathVariable("${primaryKey.javaColumn}") ${primaryKey.javaType} ${primaryKey.javaColumn}, @RequestBody ${JavaVO} vo) {
 
-        ${entity} result = ${data.requestName}Service.findOne(id,true);
-        log.info("${controller} update[验证${config.desc}] 查询结果={}", JSON.toJSONString(result));
+        boolean isUpdate = service.updateByPrimaryKey(vo,id);
 
-        log.info("${controller} update[修改一个${config.desc}] 被修改的ID={},被修改的字段={}", id, params);
-        boolean isUpdate = ${data.requestName}Service.updateById(params,id);
-        log.info("${controller} update[修改一个${config.desc}] 修改结果={}", isUpdate);
-
-        return CommonResult.result(isUpdate);
+        return ResponseEntity.ok(isUpdate);
     }
 
-    /**
-     * <p>删除一个${config.desc}
-     * <p>author: ${config.author}
-     *
-     * @param id 被删除的ID
-     * @since ${Date}
-     * @return CommonResult
-     **/
-    @DeleteMapping("/{${data.primaryName}}")
-    public CommonResult delete(@Valid @NotNull @PathVariable("${data.primaryName}") @ApiParam("被删除的ID") ${data.primaryType} id) {
+    @DeleteMapping("/{${primaryKey.javaColumn}}")
+    public ResponseEntity<Boolean> delete(@PathVariable("${primaryKey.javaColumn}") ${primaryKey.javaType} ${primaryKey.javaColumn}) {
 
-        ${entity} result = ${data.requestName}Service.findOne(id,true);
-        log.info("${controller} delete[验证${config.desc}] 查询结果={}", JSON.toJSONString(result));
+        boolean isDelete = service.deleteByPrimaryKey(id);
 
-        log.info("${controller} delete[删除一个${config.desc}] 被删除的ID={}", id);
-        boolean isDelete = ${data.requestName}Service.deleteById(id);
-        log.info("${controller} delete[删除一个${config.desc}] 删除结果={}", isDelete);
-
-        return CommonResult.result(isDelete);
+        return ResponseEntity.ok(isDelete);
     }
 
 }

@@ -29,7 +29,7 @@
 
     <update id="updateByPrimaryKey">
         UPDATE `${table.name}`
-        SET #foreach ($col in $columns)`$col.column` = #{$col.javaColumn}#if($foreach.hasNext),#end#end
+        SET #foreach ($col in $columns)#if($col.columnKey != "PRI")`$col.column` = #{$col.javaColumn}#if($foreach.hasNext),#end#end#end
 
         WHERE `${primaryKey.column}` = #{${primaryKey.javaColumn}} LIMIT 1
     </update>
@@ -38,5 +38,8 @@
         DELETE FROM `${table.name}`
         WHERE `${primaryKey.column}` = #{${primaryKey.javaColumn}} LIMIT 1
     </delete>
+
+
+
 
 </mapper>
