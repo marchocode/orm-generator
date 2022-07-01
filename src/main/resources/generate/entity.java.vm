@@ -11,7 +11,7 @@ import java.lang.Integer;
 /**
  * ${table.name}
  *
- * @author <a href='https://github.com/marcho-code/orm-generator.git'>orm-generator</>
+ * @author <a href='https://github.com/marcho-code/orm-generator'>orm-generator</>
  * @since ${date}
  */
 @Getter
