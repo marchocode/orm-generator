@@ -1,23 +1,19 @@
 package xyz.chaobei.generate;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import xyz.chaobei.generate.service.GenerateService;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Properties;
 
-@SpringBootApplication
-public class SpringApiGenerateApplication implements CommandLineRunner {
+public class SpringApiGenerateApplication {
 
-    @Autowired
-    private GenerateService generateService;
+    public static void main(String[] args) throws SQLException, IOException {
 
-    public static void main(String[] args) {
-        SpringApplication.run(SpringApiGenerateApplication.class, args);
+        Properties properties = new Properties();
+        properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("orm-config.properties"));
+
+        String string = properties.getProperty("orm.datasource.driver-class-name");
+        System.out.println(string);
+
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        generateService.generate("org_user");
-    }
 }

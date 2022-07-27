@@ -3,7 +3,6 @@ package xyz.chaobei.generate.service;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.velocity.app.Velocity;
-import org.springframework.stereotype.Service;
 import xyz.chaobei.generate.config.ContextConfig;
 import xyz.chaobei.generate.config.GenerateConfig;
 import xyz.chaobei.generate.entity.ColumnEntity;
@@ -26,7 +25,6 @@ import java.util.stream.Collectors;
  * @author: <a href='mailto:maruichao52@gmail.com'>MRC</a>
  * @since 2022/6/26
  **/
-@Service("generateService")
 @Slf4j
 @Getter
 public class GenerateService {

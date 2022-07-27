@@ -1,6 +1,5 @@
 package xyz.chaobei.generate.interfaces.impl;
 
-import org.springframework.stereotype.Component;
 import xyz.chaobei.generate.interfaces.AbstractTemplate;
 
 /**
@@ -8,7 +7,6 @@ import xyz.chaobei.generate.interfaces.AbstractTemplate;
  * @author: <a href='mailto:maruichao52@gmail.com'>MRC</a>
  * @since 2022/6/23
  **/
-@Component
 public class JavaEntityTemplate extends AbstractTemplate {
 
     @Override

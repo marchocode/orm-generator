@@ -1,9 +1,7 @@
 package xyz.chaobei.generate.interfaces.impl;
 
-import org.springframework.stereotype.Component;
 import xyz.chaobei.generate.interfaces.AbstractTemplate;
 
-@Component
 public class JavaMappingTemplate extends AbstractTemplate {
 
     @Override
